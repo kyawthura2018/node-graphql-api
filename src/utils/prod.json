@@ -1,0 +1,14 @@
+{
+	"database": {
+		"enabled": true,
+		"defaultInstance": "instanceMongo",
+		"instances": {
+			"instanceMongo": {
+				"enabled": true,
+				"protocol": "Mongo",
+				"useStringID": true,
+				"url": "mongodb://mongos1:27017,mongos2:27017/akwebdb"
+			}
+		}
+	}
+}
