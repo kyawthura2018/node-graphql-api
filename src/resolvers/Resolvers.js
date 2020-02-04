@@ -2,8 +2,15 @@ const { Account } = require('../model/Account');
 const { PubSub } = require('apollo-server');
 const EVENTS_CREATED = require('../subscription/SubAccount');
 
-const Web3 = require('web3');
-const web3 = new Web3('wss://parity-ws.immin.io:443');
+var Web3 = require('web3');
+const testnet = 'wss://parity-ws.immin.io:443';
+var Web3WsProvider = require('web3-providers-ws');
+var options = {
+	timeout: 30000,
+	headers: { authorization: 'Basic ZXRoOm4wMGJtb29u' }
+};
+var ws = new Web3WsProvider(testnet, options);
+const web3 = new Web3(ws);
 
 const pubsub = new PubSub();
 
@@ -18,7 +25,7 @@ const resolvers = {
 				let result = await web3.eth.getBalance(args.address);
 				args.balance = web3.utils.fromWei(result, 'ether');
 				let response = await Account.create(args);
-				let accounts = await Account.find({}).exec();
+				let accounts = await Account.find().exec();
 				pubsub.publish(EVENTS_CREATED, {
 					updatedAccounts: accounts
 				});

@@ -3,8 +3,8 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
 	type Account {
 		id: ID!
-		address: String
-		balance: String
+		address: String!
+		balance: String!
 	}
 
 	type Query {
